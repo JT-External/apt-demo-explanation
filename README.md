@@ -3,75 +3,75 @@
 ```mermaid
 classDiagram
     class VirtualBox {
-        +HostOS: Windows/macOS/Linux
-        +NATNetwork: DemoNet
+        +ホストOS: Windows/macOS/Linux
+        +NATネットワーク: DemoNet
     }
     class KaliLinux {
-        +Name: Kali-Attacker
-        +IP: 192.168.56.10
-        +Tools: Metasploit, Nmap, Mimikatz
-        +Role: Attacker
+        +名前: Kali-Attacker
+        +IPアドレス: 192.168.56.10
+        +ツール: Metasploit, Nmap, Mimikatz
+        +役割: 攻撃者
     }
     class WindowsEval {
-        +Name: Windows-Target
-        +IP: 192.168.56.11
+        +名前: Windows-Target
+        +IPアドレス: 192.168.56.11
         +OS: Windows 10/11 Enterprise
-        +Vulnerabilities: SMBv1, Unpatched
-        +Role: Target
+        +脆弱性: SMBv1, 未パッチ
+        +役割: 標的
     }
     class DemoNet {
-        +Type: NAT Network
-        +Purpose: Isolated Communication
+        +種類: NATネットワーク
+        +目的: 隔離された通信
     }
 
-    VirtualBox o-- KaliLinux : Hosts
-    VirtualBox o-- WindowsEval : Hosts
-    KaliLinux --> DemoNet : Connects
-    WindowsEval --> DemoNet : Connects
-    KaliLinux --> WindowsEval : Attacks
+    VirtualBox o-- KaliLinux : ホスト
+    VirtualBox o-- WindowsEval : ホスト
+    KaliLinux --> DemoNet : 接続
+    WindowsEval --> DemoNet : 接続
+    KaliLinux --> WindowsEval : 攻撃
 ```
 
 ```mermaid
 sequenceDiagram
-    participant K as Kali Linux (Attacker)
-    participant W as Windows Eval (Target)
+    participant K as Kali Linux (攻撃者)
+    participant W as Windows評価版 (標的)
 
-    Note over K,W: Phase 1: Reconnaissance
-    K->>W: Nmap Scan (192.168.56.11)
-    W-->>K: Open Ports (445, 3389), OS Info
-    K->>W: Enum4Linux (SMB Enumeration)
-    W-->>K: Usernames, Shares
+    Note over K,W: フェーズ1: 偵察
+    K->>W: Nmapスキャン (192.168.56.11)
+    W-->>K: オープンなポート (445, 3389), OS情報
+    K->>W: Enum4Linux (SMB列挙)
+    W-->>K: ユーザー名, 共有フォルダ
 
-    Note over K,W: Phase 2: Initial Access
-    K->>K: Start Metasploit
-    K->>W: Exploit MS17-010 EternalBlue
-    alt Exploit Succeeds
-        W-->>K: Meterpreter Session
-    else Exploit Fails
-        K->>W: Generate malicious.exe (msfvenom)
-        K->>W: Transfer malicious.exe (Manual)
-        W->>W: Execute malicious.exe
-        W-->>K: Meterpreter Session
+    Note over K,W: フェーズ2: 初期アクセス
+    K->>K: Metasploit起動
+    K->>W: MS17-010 EternalBlueエクスプロイト
+    alt エクスプロイト成功
+        W-->>K: Meterpreterセッション
+    else エクスプロイト失敗
+        K->>W: malicious.exe生成 (msfvenom)
+        K->>W: malicious.exe転送 (手動)
+        W->>W: malicious.exe実行
+        W-->>K: Meterpreterセッション
     end
 
-    Note over K,W: Phase 3: Privilege Escalation
+    Note over K,W: フェーズ3: 権限昇格
     K->>W: Meterpreter: getuid
-    W-->>K: Current User
-    K->>W: Exploit BypassUAC or getsystem
-    W-->>K: SYSTEM Privileges
+    W-->>K: 現在のユーザー
+    K->>W: BypassUACまたはgetsystemエクスプロイト
+    W-->>K: SYSTEM権限
 
-    Note over K,W: Phase 4: Persistence
-    K->>W: Install Persistence (Registry)
-    W-->>K: Backdoor Confirmed
+    Note over K,W: フェーズ4: 持続性
+    K->>W: 永続性設置 (レジストリ)
+    W-->>K: バックドア確認
 
-    Note over K,W: Phase 5: Data Exfiltration
-    K->>W: Load Mimikatz (wdigest)
-    W-->>K: Credentials Dumped
-    K->>W: Search and Download Files
-    W-->>K: Files Transferred
+    Note over K,W: フェーズ5: データ窃取
+    K->>W: Mimikatzロード (wdigest)
+    W-->>K: 資格情報ダンプ
+    K->>W: ファイル検索とダウンロード
+    W-->>K: ファイル転送
 
-    Note over K,W: Phase 6: Cover Tracks (Optional)
-    K->>W: Clear Event Logs (clearev)
-    W-->>K: Logs Cleared
-    K->>W: Exit Session
+    Note over K,W: フェーズ6: 痕跡消去 (オプション)
+    K->>W: イベントログクリア (clearev)
+    W-->>K: ログ消去完了
+    K->>W: セッション終了
 ```
