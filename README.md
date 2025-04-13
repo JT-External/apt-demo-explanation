@@ -24,8 +24,8 @@ classDiagram
         +Purpose: Isolated Communication
     }
 
-    VirtualBox ||--o{ KaliLinux : Hosts
-    VirtualBox ||--o{ WindowsEval : Hosts
+    VirtualBox o-- KaliLinux : Hosts
+    VirtualBox o-- WindowsEval : Hosts
     KaliLinux --> DemoNet : Connects
     WindowsEval --> DemoNet : Connects
     KaliLinux --> WindowsEval : Attacks
