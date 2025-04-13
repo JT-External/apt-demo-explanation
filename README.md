@@ -28,7 +28,7 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant K as Kali Linux (攻撃者)
-    participant W as Windows評価版 (標的)
+    participant W as Windows (標的)
 
     Note over K,W: フェーズ1: 偵察
     K->>W: Nmapスキャン (192.168.56.11)
