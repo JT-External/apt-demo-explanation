@@ -2,26 +2,20 @@
 
 ```mermaid
 classDiagram
-    class VirtualBox {
-        +ホストOS: Windows/macOS/Linux
-        +NATネットワーク: DemoNet
-    }
     class KaliLinux {
         +名前: Kali-Attacker
-        +IPアドレス: 192.168.56.10
+        +IPアドレス: 192.168.1.10
         +ツール: Metasploit, Nmap, Mimikatz
         +役割: 攻撃者
     }
     class WindowsEval {
         +名前: Windows-Target
-        +IPアドレス: 192.168.56.11
-        +OS: Windows 10/11 Enterprise
+        +IPアドレス: 192.168.1.11
+        +OS: Windows 10 Enterprise
         +脆弱性: SMBv1, 未パッチ
         +役割: 標的
     }
 
-    VirtualBox o-- KaliLinux : ホスト
-    VirtualBox o-- WindowsEval : ホスト
     KaliLinux --> WindowsEval : 攻撃
 ```
 
@@ -31,7 +25,7 @@ sequenceDiagram
     participant W as Windows (標的)
 
     Note over K,W: フェーズ1: 偵察
-    K->>W: Nmapスキャン (192.168.56.11)
+    K->>W: Nmapスキャン (192.168.1.11)
     W-->>K: オープンなポート (445, 3389), OS情報
     K->>W: Enum4Linux (SMB列挙)
     W-->>K: ユーザー名, 共有フォルダ
