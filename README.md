@@ -19,15 +19,9 @@ classDiagram
         +脆弱性: SMBv1, 未パッチ
         +役割: 標的
     }
-    class DemoNet {
-        +種類: NATネットワーク
-        +目的: 隔離された通信
-    }
 
     VirtualBox o-- KaliLinux : ホスト
     VirtualBox o-- WindowsEval : ホスト
-    KaliLinux --> DemoNet : 接続
-    WindowsEval --> DemoNet : 接続
     KaliLinux --> WindowsEval : 攻撃
 ```
 
