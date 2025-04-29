@@ -28,6 +28,7 @@ classDiagram
 - **環境**:
   - **攻撃マシン**: Kali Linux（最新バージョン、VirtualBox VM）
   - **対象マシン**: Windows 10 21H2（VirtualBox VM、意図的に脆弱な設定）
+     - ウイルスと脅威の防止をOFFにしておく
   - 両VMは同一ネットワーク内で通信可能（例：VirtualBoxのNATネットワーク）
   - スナップショットを事前に作成し、復元可能に設定
 - **必要なツール**:
